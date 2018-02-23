@@ -74,7 +74,7 @@ class UVaRestJsonObject* UVaRestLibrary::LoadJsonFromFile(UObject* WorldContextO
 	UVaRestJsonObject* Json = UVaRestJsonObject::ConstructJsonObject(WorldContextObject);
 
 	FString JSONString;
-	if (FFileHelper::LoadFileToString(JSONString, *(FPaths::ProjectContentDir() + Path)))
+	if (FFileHelper::LoadFileToString(JSONString, *(FPaths::GameContentDir() + Path)))
 	{
 		if (Json->DecodeJson(JSONString))
 		{
@@ -101,7 +101,7 @@ TMap<UVaRestRequestJSON*, FVaRestCallResponse> UVaRestLibrary::RequestMap;
 
 void UVaRestLibrary::CallURL(UObject* WorldContextObject, const FString& URL, ERequestVerb Verb, ERequestContentType ContentType, UVaRestJsonObject* VaRestJson, const FVaRestCallDelegate& Callback)
 {
-	UWorld* World = GEngine->GetWorldFromContextObjectChecked(WorldContextObject);
+	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
 	if (World == nullptr)
 	{
 		UE_LOG(LogVaRest, Error, TEXT("UVaRestLibrary: Wrong world context"))
